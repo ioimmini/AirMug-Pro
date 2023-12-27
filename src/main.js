@@ -71,28 +71,35 @@
     }
 
     function calcValues(values, currentYOffset) {
+        let rv;
 
+        // 현재 scene(scrollSection)에서 스크롤 된 범위를 비율로 구하기
+        let scrollRatio = currentYOffset / sceneInfo[currentScene].scrollHeight;
+
+        rv =  scrollRatio * ( values[1]- values[0] ) + values[0] ;
+
+        return rv;
     }
 
     function playAnimaition() {
     //scroll 될때 글자 위치 변하기
     const objs = sceneInfo[currentScene].objs;
     const values = sceneInfo[currentScene].values;
+    const currentYOffset = yOffset - prevScrollHeight;
 
         switch (currentScene) {
             case 0:
-                let messageA_opacity_0 = values.messageA_opacity[0];
-                let messageA_opacity_1 = values.messageA_opacity[1];
-                calcValues(values.messageA_opacity);
+                let messageA_opacity_in = calcValues(values.messageA_opacity, currentYOffset);
+                objs.messageA.style.opacity = messageA_opacity_in;
                 break;
+
             case 1:
-                calcValues();
                 break;
+
             case 2:
-                calcValues();
                 break;
+                
             case 3:
-                calcValues();
                 break; 
         }
     }
