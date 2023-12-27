@@ -70,16 +70,29 @@
 
     }
 
+    function calcValues(values, currentYOffset) {
+
+    }
+
     function playAnimaition() {
     //scroll 될때 글자 위치 변하기
+    const objs = sceneInfo[currentScene].objs;
+    const values = sceneInfo[currentScene].values;
+
         switch (currentScene) {
             case 0:
+                let messageA_opacity_0 = values.messageA_opacity[0];
+                let messageA_opacity_1 = values.messageA_opacity[1];
+                calcValues(values.messageA_opacity);
                 break;
             case 1:
+                calcValues();
                 break;
             case 2:
+                calcValues();
                 break;
             case 3:
+                calcValues();
                 break; 
         }
     }
