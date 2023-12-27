@@ -3,6 +3,7 @@
     let yOffset = 0; // window.pageYOffset
     let prevScrollHeight = 0; // 현재 스크롤 위치(yOffset)보다 이전에 위치한 스크롤 섹션들의 스크롤 높이값의 합
     let currentScene = 0; // 현재 활성화 된(눈 앞에 보고있는) 씬(scroll-section)
+    let enterNewScene = false; // 새로운 scene이 시작된 순간 true
 
     const sceneInfo = [
         {
@@ -98,29 +99,35 @@
 
             case 2:
                 break;
-                
+
             case 3:
                 break; 
         }
     }
 
     function scrollLoop() {
+        enterNewScene = false;
         prevScrollHeight = 0;
          for( let i = 0; i < currentScene; i++ ){
             prevScrollHeight += sceneInfo[i].scrollHeight; 
         }
 
         if ( yOffset > prevScrollHeight + sceneInfo[currentScene].scrollHeight ) {
+            enterNewScene = true;
             currentScene++;
             document.body.setAttribute('id', `show-scene-${currentScene}`);
         }
 
         if( yOffset < prevScrollHeight ) {
+            enterNewScene = true;
+
             if( currentScene === 0 ) return; // 브라우저 바운스 효과로 인해 마이너스가 되는 것을 방지(모바일)
             currentScene--;
             document.body.setAttribute('id', `show-scene-${currentScene}`);
         }
 
+        if( enterNewScene ) return;
+        
         playAnimaition();
 
     }
